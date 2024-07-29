@@ -5,7 +5,7 @@ public class Pokemon{
     public int Dexnum {get; set;}//Primary Key
     public required string Name {get; set;}
     public required string Type {get; set;}
-    public int TrainerID {get; set;} //Foriegn Key
+    public int TrainerID {get; set;} //Foreign Key
 
     public Trainer Trainer {get; set;}
 

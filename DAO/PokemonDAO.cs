@@ -4,27 +4,18 @@ using pokedex.Entities; // Ensure correct namespace
 using Microsoft.EntityFrameworkCore;
 
 namespace pokedex.DAO
+{public class PokemonDAO : IDAO<Pokemon>
 {
-    public class PokemonDAO : IDAO<Pokemon>
+    private readonly PokemonDbContext _context;
+
+    public PokemonDAO(PokemonDbContext context)
     {
-        private readonly PokemonDbContext _context;
-
-        public PokemonDAO(Entities.PokemonDbContext context)
-        {
-            Context = context;
-        }
-
-        public Entities.PokemonDbContext Context { get; }
-
-        public class PokemonDbContext : DbContext
-    {
-        public DbSet<Pokemon> Pokemon { get; set; }
-        public DbSet<Trainer> Trainer { get; set; } // Assuming Trainer class exists
-
-        public PokemonDbContext(DbContextOptions<PokemonDbContext> options) : base(options) { }
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-        public void CreatePokemon(int dexnum, string name, string type, int trainerID)
+    public void Add(int dexnum, string name, string type, int trainerID)
+    {
+        try
         {
             // Check if the Trainer exists
             var trainerExists = _context.Trainer.Any(t => t.TrainerID == trainerID);
@@ -51,13 +42,24 @@ namespace pokedex.DAO
 
             Console.WriteLine("Pokémon created successfully.");
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+        public void CreatePokemon(Pokemon pokemon)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Delete(Pokemon pokemon)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteByDexnum(int dexNum, int trainerId)
+       public void DeleteByDexnum(int dexNum, int trainerId)
+        {
+            try
         {
             // Find the Pokémon by Dexnum and TrainerId
             var pokemon = _context.Pokemon
@@ -65,7 +67,7 @@ namespace pokedex.DAO
 
             if (pokemon != null)
             {
-                // Release Pokemon
+                // Remove Pokémon from the context
                 _context.Pokemon.Remove(pokemon);
 
                 // Save changes to the database
@@ -78,10 +80,15 @@ namespace pokedex.DAO
                 Console.WriteLine("No Pokémon found with the provided Dexnum and Trainer ID.");
             }
         }
+        catch (Exception ex)
+        {
+            // Handle any unexpected errors
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+        }
 
         public ICollection<Pokemon> GetAllPokemons()
         {
-            
             List<Pokemon> pokemons = _context.Pokemon.ToList();
             return pokemons;
         }
@@ -101,16 +108,5 @@ namespace pokedex.DAO
         {
             throw new NotImplementedException();
         }
-
-        public void CreatePokemon(Pokemon Pokemon)
-        
-            {
-        if (Pokemon == null)
-            throw new ArgumentNullException(nameof(Pokemon));
-
-        _context.Pokemon.Add(Pokemon);
-        _context.SaveChanges();
-        }
-        
     }
 }

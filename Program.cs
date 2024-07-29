@@ -58,7 +58,7 @@ using (var context = new PokemonDbContext())
                 if (int.TryParse(Console.ReadLine(), out int trainerId))
                 {
                     // Call the method to create the Pokémon
-                    pokemonDAO.CreatePokemon(dexnum, name, type, trainerId);
+                     pokemonDAO.Add(dexnum, name, type, trainerId);
                 }
                 else
                 {
@@ -76,7 +76,7 @@ using (var context = new PokemonDbContext())
                 if (pokemonList != null && pokemonList.Any())
                 {
                 foreach (var pokemon in pokemonList){
-                    Console.WriteLine($"Dex number: {pokemon.Dexnum} Pokemon Name: {pokemon.Name}, Type: {pokemon.Type} ");
+                    Console.WriteLine($"Trainer ID: {pokemon.TrainerID} Dex number: {pokemon.Dexnum} Pokemon Name: {pokemon.Name}, Type: {pokemon.Type} ");
                 }
                 }
             break;
