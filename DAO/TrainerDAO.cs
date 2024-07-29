@@ -10,6 +10,8 @@ namespace pokedex.DAO
     {
         private readonly PokemonDbContext _context;
 
+        public string? TrainerName { get; private set; }
+
         public TrainerDAO(PokemonDbContext context)
         {
             _context = context;
@@ -17,30 +19,41 @@ namespace pokedex.DAO
 
         public List<Trainer> GetAllTrainers()
         {
-            return _context.Trainers.ToList();
+            return _context.Trainer.ToList();
         }
 
-        public void AddTrainer()
-        {
+    public void AddTrainer()    
+        {   
             Console.Write("Enter Trainer Name: ");
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+            #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             string name = Console.ReadLine();
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+            #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
-            // Create new Trainer instance and add to DbSet
-            var trainer = new Trainer { TrainerName = name };
-            _context.Trainers.Add(trainer);
-            _context.SaveChanges();
+            Console.Write("Enter Trainer ID: ");
+                string id = Console.ReadLine();
 
-            Console.WriteLine("Trainer added successfully.");
-        }
+             if (int.TryParse(id, out int trainerId))
+                 {
+                    // Create new Trainer instance and add to DbSet
+                 Trainer newTrainer = new Trainer { TrainerID = trainerId, TrainerName = name };
+
+                 _context.Trainer.Add(newTrainer); // Ensure DbSet property is named 'Trainers'
+                    _context.SaveChanges();
+
+        Console.WriteLine("Trainer added successfully.");
+    }
+    else
+    {
+        Console.WriteLine("Invalid input. Please enter a valid integer for the Trainer ID.");
+    }
+}
 
         public void DeleteTrainerByID(int trainerID)
         {
-            var trainer = _context.Trainers.Find(trainerID);
+            var trainer = _context.Trainer.Find(trainerID);
             if (trainer != null)
             {
-                _context.Trainers.Remove(trainer);
+                _context.Trainer.Remove(trainer);
                 _context.SaveChanges();
                 Console.WriteLine($"Trainer with ID {trainerID} deleted successfully.");
             }

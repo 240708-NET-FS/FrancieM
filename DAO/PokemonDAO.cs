@@ -52,11 +52,6 @@ namespace pokedex.DAO
             Console.WriteLine("Pokémon created successfully.");
         }
 
-        public void CreatePokemon(Pokemon pokemon)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Delete(Pokemon pokemon)
         {
             throw new NotImplementedException();
@@ -86,6 +81,7 @@ namespace pokedex.DAO
 
         public ICollection<Pokemon> GetAllPokemons()
         {
+            
             List<Pokemon> pokemons = _context.Pokemon.ToList();
             return pokemons;
         }
@@ -105,5 +101,16 @@ namespace pokedex.DAO
         {
             throw new NotImplementedException();
         }
+
+        public void CreatePokemon(Pokemon Pokemon)
+        
+            {
+        if (Pokemon == null)
+            throw new ArgumentNullException(nameof(Pokemon));
+
+        _context.Pokemon.Add(Pokemon);
+        _context.SaveChanges();
+        }
+        
     }
 }

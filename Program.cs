@@ -1,4 +1,5 @@
 using Microsoft.Identity.Client;
+using Microsoft.VisualBasic;
 using pokedex.DAO;
 using pokedex.Entities;
 // Ensure the database is created within the same scope
@@ -71,18 +72,13 @@ using (var context = new PokemonDbContext())
             break;
         case "4":
             Console.WriteLine("Getting all Pokemon...");
-            try
-            {
-                List<Pokemon> pokemons = (List<Pokemon>)pokemonDAO.GetAllPokemons();
-                foreach (var pokemon in pokemons)
+            var pokemonList = context.Pokemon.ToList();
+                if (pokemonList != null && pokemonList.Any())
                 {
-                    Console.WriteLine($"Name: {pokemon.Name}, Dex Number: {pokemon.Dexnum}, Trainer ID: {pokemon.TrainerID}");
+                foreach (var pokemon in pokemonList){
+                    Console.WriteLine($"Dex number: {pokemon.Dexnum} Pokemon Name: {pokemon.Name}, Type: {pokemon.Type} ");
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
+                }
             break;
         case "5":
             Console.Write("Enter the Pokedex number: ");

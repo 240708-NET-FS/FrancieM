@@ -218,3 +218,4 @@ C:\Users\compu\OneDrive\Desktop\proj1\pokedex\obj\Debug\net8.0\refint\pokedex.dl
 C:\Users\compu\OneDrive\Desktop\proj1\pokedex\obj\Debug\net8.0\pokedex.pdb
 C:\Users\compu\OneDrive\Desktop\proj1\pokedex\obj\Debug\net8.0\pokedex.genruntimeconfig.cache
 C:\Users\compu\OneDrive\Desktop\proj1\pokedex\obj\Debug\net8.0\ref\pokedex.dll
+C:\Users\compu\OneDrive\Desktop\proj1\pokedex\obj\Debug\net8.0\pokedex.sourcelink.json

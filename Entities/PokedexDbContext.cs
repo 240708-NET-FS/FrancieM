@@ -6,7 +6,7 @@ public class PokemonDbContext : DbContext
 {
     public PokemonDbContext() {}
     public DbSet<Pokemon> Pokemon { get; set; }
-    public DbSet<Trainer> Trainers { get; set; }
+    public DbSet<Trainer> Trainer { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
